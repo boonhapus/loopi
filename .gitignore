@@ -1,0 +1,11 @@
+# Ignore OS files
+.DS_Store
+
+# Ignore venv
+node_modules/
+
+# Ignore build
+dist/
+
+# Ignore project
+.vscode/
