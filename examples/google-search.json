@@ -4,12 +4,15 @@
   "speed": 1.5,
   "steps": [
     { "action": "navigate", "url": "/" },
-    { "action": "wait", "ms": 1600 },
+    { "action": "wait", "for": 1600 },
+    { "action": "zoom", "on": "textarea[name=\"q\"]", "magnify": 1.5, "duration": 500 },
     { "action": "type", "selector": "textarea[name=\"q\"]", "text": "who is from the streets, per se?", "delay": 70 },
-    { "action": "wait", "ms": 1000 },
+    { "action": "wait", "for": 1000 },
     { "action": "type", "selector": "textarea[name=\"q\"]", "text": "interesting... yes..", "delay": 70 },
-    { "action": "wait", "ms": 1500 },
+    { "action": "wait", "for": 1500 },
     { "action": "type", "selector": "textarea[name=\"q\"]", "text": "interesting..", "delay": 70 },
-    { "action": "wait", "ms": 2000 }
+    { "action": "wait", "for": 2000 },
+    { "action": "unzoom", "duration": 500 },
+    { "action": "wait", "for": 1500 }
   ]
 }
