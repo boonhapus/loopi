@@ -248,6 +248,40 @@ const handlers = {
       if (el) el.remove();
     });
   },
+
+  /** @type {StepHandler} */
+  async geolocate(page, step, { baseUrl }) {
+    const ctx = page.context();
+    const { latitude, longitude, accuracy, grant = true, origin, clear } = step;
+
+    const grantOpts = origin
+      ? { origin }
+      : baseUrl
+        ? (() => {
+            try {
+              return { origin: new URL(baseUrl).origin };
+            } catch {
+              return undefined;
+            }
+          })()
+        : undefined;
+
+    if (clear) {
+      if (grant) await ctx.grantPermissions(['geolocation'], grantOpts);
+      await ctx.setGeolocation(null);
+      return;
+    }
+
+    if (latitude === undefined || longitude === undefined) {
+      throw new Error("geolocate: 'latitude' and 'longitude' are required (or use clear: true)");
+    }
+
+    if (grant) await ctx.grantPermissions(['geolocation'], grantOpts);
+
+    const geo = { latitude, longitude };
+    if (accuracy !== undefined) geo.accuracy = accuracy;
+    await ctx.setGeolocation(geo);
+  },
 };
 
 /**

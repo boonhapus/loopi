@@ -85,7 +85,10 @@ Options:
  */
 function formatStepLabel(step) {
   const action = step.action;
-  const detail = step.selector ?? step.url ?? step.key ?? step.for ?? '';
+  let detail = step.selector ?? step.url ?? step.key ?? step.for ?? '';
+  if (action === 'geolocate') {
+    detail = step.clear ? 'clear' : `${step.latitude},${step.longitude}`;
+  }
   return `${action} ${detail}`.trim();
 }
 
@@ -134,6 +137,15 @@ async function main() {
   }
 
   const contextOptions = { viewport };
+  if (scenario.permissions) {
+    contextOptions.permissions = scenario.permissions;
+  }
+  if (scenario.geolocation) {
+    contextOptions.geolocation = scenario.geolocation;
+    if (!contextOptions.permissions?.includes('geolocation')) {
+      contextOptions.permissions = [...(contextOptions.permissions ?? []), 'geolocation'];
+    }
+  }
   if (!args.dryRun) {
     contextOptions.recordVideo = { dir: path.join(outputDir, 'raw', outputName), size: viewport };
   }
