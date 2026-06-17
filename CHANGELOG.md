@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0] - 2026-06-16
+
+### Added
+- **`geolocate`** action — mock GPS coordinates and grant geolocation permission mid-scenario.
+- **Top-level `geolocation` and `permissions`** — set session-wide mock location and browser permissions at context creation.
+
+### Changed
+- **README** — expanded spec format into a full reference with per-action field tables and examples.
+
 ## [1.1.0] - 2026-04-25
 
 ### Added
