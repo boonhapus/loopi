@@ -1,6 +1,6 @@
 {
   "name": "loopi",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Slick turns a spec file into a short demo video.",
   "type": "module",
 "bin": {

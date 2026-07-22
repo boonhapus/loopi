@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.1] - 2026-07-22
+
+### Fixed
+- **`wait` `NETWORK_IDLE`** — map to Playwright's `networkidle` (was incorrectly sending `network_idle`).
+
 ## [1.2.0] - 2026-06-16
 
 ### Added
