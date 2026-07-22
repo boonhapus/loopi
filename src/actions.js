@@ -107,7 +107,7 @@ const handlers = {
     if (typeof waitFor === 'number') {
       await page.waitForTimeout(waitFor);
     } else if (waitFor === 'NETWORK_IDLE' || waitFor === 'LOAD' || waitFor === 'DOMCONTENTLOADED') {
-      const state = waitFor === 'DOMCONTENTLOADED' ? 'domcontentloaded' : waitFor.toLowerCase();
+      const state = waitFor.toLowerCase().replaceAll('_', '');
       await page.waitForLoadState(state, { timeout });
     } else {
       // Treat as selector

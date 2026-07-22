@@ -12,6 +12,40 @@ describe('actions', () => {
     });
   });
 
+  describe('wait', () => {
+    it('maps NETWORK_IDLE to Playwright networkidle', async () => {
+      const { runStep } = await import('../src/actions.js');
+      const waitForLoadState = vi.fn();
+      const page = { waitForLoadState };
+
+      await runStep(page, { action: 'wait', for: 'NETWORK_IDLE' }, { baseUrl: '' });
+
+      expect(waitForLoadState).toHaveBeenCalledWith('networkidle', { timeout: 30000 });
+    });
+
+    it('maps LOAD and DOMCONTENTLOADED to Playwright load states', async () => {
+      const { runStep } = await import('../src/actions.js');
+      const waitForLoadState = vi.fn();
+      const page = { waitForLoadState };
+
+      await runStep(page, { action: 'wait', for: 'LOAD' }, { baseUrl: '' });
+      await runStep(page, { action: 'wait', for: 'DOMCONTENTLOADED', timeout: 5000 }, { baseUrl: '' });
+
+      expect(waitForLoadState).toHaveBeenNthCalledWith(1, 'load', { timeout: 30000 });
+      expect(waitForLoadState).toHaveBeenNthCalledWith(2, 'domcontentloaded', { timeout: 5000 });
+    });
+
+    it('waits a number of milliseconds', async () => {
+      const { runStep } = await import('../src/actions.js');
+      const waitForTimeout = vi.fn();
+      const page = { waitForTimeout };
+
+      await runStep(page, { action: 'wait', for: 250 }, { baseUrl: '' });
+
+      expect(waitForTimeout).toHaveBeenCalledWith(250);
+    });
+  });
+
   describe('geolocate', () => {
     function mockPage() {
       const grantPermissions = vi.fn();
